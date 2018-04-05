@@ -1,0 +1,22 @@
+{
+  "name": "app_assof_service",
+  "version": "1.0.0",
+  "description": "Serviço para o APP ASSOF",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joabeleonard/appAssofService.git"
+  },
+  "keywords": [
+    "saopaulo00."
+  ],
+  "author": "Joabe Leonard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joabeleonard/appAssofService/issues"
+  },
+  "homepage": "https://github.com/joabeleonard/appAssofService#readme"
+}
