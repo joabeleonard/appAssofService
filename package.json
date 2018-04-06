@@ -10,13 +10,17 @@
     "type": "git",
     "url": "git+https://github.com/joabeleonard/appAssofService.git"
   },
-  "keywords": [
-    "saopaulo00."
-  ],
+  "keywords": [],
   "author": "Joabe Leonard",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/joabeleonard/appAssofService/issues"
   },
-  "homepage": "https://github.com/joabeleonard/appAssofService#readme"
+  "homepage": "https://github.com/joabeleonard/appAssofService#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "consign": "^0.1.6",
+    "express": "^4.16.3",
+    "mysql": "^2.15.0"
+  }
 }
