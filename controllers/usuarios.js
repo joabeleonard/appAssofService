@@ -7,20 +7,22 @@ module.exports= function(app){
 
 
     app.post('/usuarios/logar', function(req, res){
-        var usuario = reqs.body;
+        var usuario = req.body;
 
         var connection = app.persistencia.connectionFactory();
-        var usuarioDAO = new app.persistencia.UsuarioDAO(connection);
+        var usuarioDAO = new app.persistencia.UsuarioDao(connection);
+        
+        usuarioDAO.buscaPorCpfSenha(usuario, function(erro, resultado){
 
-        usuarioDAO.buscaPorUsuarioSenha(usuario, function(erro, resultado){
-
-            req.assert("cpf", "CPF Obrigatório").notEmpty();
-            req.assert("senha", "Senha Obrigatória").notEmpty();
-            if(erro){
+           if(erro){
                 console.log(erro);
-                res.send(erro);
+                res.status(500).send(erro);
+                return;
             }else{
-                res.json(usuario);
+                console.log('usuario encontrado: ' + JSON.stringify(resultado));
+
+                res.json(resultado);
+                return;
             }
             
         });
