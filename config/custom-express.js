@@ -9,6 +9,9 @@ module.exports = function(){
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());
 
+    var cors = require('cors')
+    app.use(cors());
+    
     consign().
     include('controllers').
     then('persistencia').
