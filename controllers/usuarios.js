@@ -23,7 +23,7 @@ module.exports= function(app){
             }else{
                 console.log('usuario encontrado: ' +  JSON.stringify(resultado));
 
-                res.json(resultado);
+                res.json(resultado[0]);
                 return;
             }
             
