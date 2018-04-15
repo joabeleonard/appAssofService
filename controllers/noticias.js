@@ -6,8 +6,23 @@ module.exports= function(app){
         var connection = app.persistencia.connectionFactory();
         var noticiaDAO = new app.persistencia.NoticiaDao(connection);
        
-        console.log('OK');
-        res.send("hehe");
+        noticiaDAO.buscarTodas(function(erro, resultado){
+
+        
+            console.log("resultado.length >0"+resultado.length);
+           if(erro || resultado.length ===0){
+                console.log(erro);
+                res.status(500).send(erro);
+                return;
+            }else{
+                console.log('Noticias encontradas: ' +  JSON.stringify(resultado));
+
+                res.json(resultado);
+                return;
+            }
+            
+        });
+
     });
 
     app.post('/noticias/cadastar', function(req, res){
