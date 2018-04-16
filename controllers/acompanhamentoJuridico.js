@@ -32,4 +32,29 @@ module.exports= function(app){
         console.log('OK');
         res.send("hehe");
     });
+
+    app.get('/acompanhamentoJuridico/:cpf', function(req, res){
+
+        var cpf = req.params.cpf;
+
+        var connection = app.persistencia.connectionFactory();
+        
+        var acompanhamentoJuridicoDAO = new app.persistencia.AcompanhamentoJuridicoDao(connection);
+        acompanhamentoJuridicoDAO.buscaPorCpf(cpf, function(erro, resultado){
+
+        
+           if(erro){
+                console.log(erro);
+                res.status(500).send(erro);
+                return;
+            }else{
+                console.log('processo encontrado: ' +  JSON.stringify(resultado));
+
+                res.json(resultado);
+                return;
+            }
+            
+        });
+
+    });
 }

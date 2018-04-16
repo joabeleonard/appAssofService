@@ -9,6 +9,9 @@ module.exports = function(){
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());
 
+    
+    app.use(express.static('images-news'));
+    
     var cors = require('cors')
     app.use(cors());
     
