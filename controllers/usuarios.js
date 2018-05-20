@@ -1,8 +1,10 @@
+var fs = require('fs');
+
 module.exports= function(app){
 
     app.get('/usuarios', function(req, res){
         console.log('OK');
-        res.send("hehe");
+        res.send("hehehe");
     });
 
 
@@ -60,7 +62,7 @@ module.exports= function(app){
     app.post('/usuarios/cadastrar', function(req, res){
 
         var usuario = req.body;
-
+        console.log(usuario);
         var connection = app.persistencia.connectionFactory();
         var usuarioDAO = new app.persistencia.UsuarioDao(connection);
 
@@ -79,7 +81,20 @@ module.exports= function(app){
              
          });
         console.log('OK');
-        res.send("hehe");
+    });
+
+    app.post('/usuarios/uploadImage', function(req, res){
+
+        console.log('recebendo imagem');
+
+        var filename = req.headers.filename;
+    
+        req.pipe(fs.createWriteStream('images-news/' + filename))
+        .on('finish', function(){
+          console.log('arquivo escrito');
+          res.status(201).send('ok');
+        });
+        
     });
 
 
