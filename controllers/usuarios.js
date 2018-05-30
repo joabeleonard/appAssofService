@@ -1,4 +1,6 @@
 var fs = require('fs');
+var multer  = require('multer');
+
 
 module.exports= function(app){
 
@@ -14,10 +16,10 @@ module.exports= function(app){
         var connection = app.persistencia.connectionFactory();
         var usuarioDAO = new app.persistencia.UsuarioDao(connection);
         
+        console.log(usuario);
         usuarioDAO.buscaPorCpfSenha(usuario, function(erro, resultado){
 
         
-            console.log("resultado.length >0"+resultado.length);
            if(erro || resultado.length ===0){
                 console.log(erro);
                 res.status(500).send(erro);
@@ -85,18 +87,37 @@ module.exports= function(app){
 
     app.post('/usuarios/uploadImage', function(req, res){
 
-        console.log('recebendo imagem');
+        console.log(req);
 
-        var filename = req.headers.filename;
+        var filename = req.header.filename;
     
-        req.pipe(fs.createWriteStream('images-news/' + filename))
+        req.pipe(fs.createWriteStream('images-news/' + filename+'.jpg'))
         .on('finish', function(){
           console.log('arquivo escrito');
-          res.status(201).send('ok');
+          res.status(201).send(req);
         });
         
     });
 
+    app.route('/usuarios/uploadImage/busboy')
+        .post(function (req, res, next) {
+ 
+        var fstream;
+        req.pipe(req.busboy);
+        req.busboy.on('file', function (fieldname, file, filename) {
+            console.log("Uploading: " + filename);
+ 
+            //Path where image will be uploaded
+            fstream = fs.createWriteStream( 'images-news/' + filename);
+            file.pipe(fstream);
+            fstream.on('close', function () {    
+                console.log("Upload Finished of " + filename);              
+                res.redirect('back');           //where to go next
+            });
+        });
+    });
 
+  
+   
     
 }

@@ -2,7 +2,6 @@ function UsuarioDao(connection) {
     this._connection = connection;
 }
 UsuarioDao.prototype.buscaPorCpfSenha = function(usuario, callback){
-    console.log(usuario);
     this._connection.query('select * from tb_usuario where cpf=? and senha=?',[usuario.cpf, usuario.senha],callback)
 }
 
