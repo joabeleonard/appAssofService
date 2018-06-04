@@ -41,9 +41,8 @@ module.exports= function(app){
         
         var acompanhamentoJuridicoDAO = new app.persistencia.AcompanhamentoJuridicoDao(connection);
         acompanhamentoJuridicoDAO.buscaPorCpf(cpf, function(erro, resultado){
-
-        
-           if(erro){
+         
+           if(erro  || resultado.length ===0){
                 console.log(erro);
                 res.status(500).send(erro);
                 return;
