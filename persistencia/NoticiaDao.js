@@ -3,7 +3,7 @@ function NoticiaDAO(connection){
 }
 
 NoticiaDAO.prototype.buscarTodas = function(callback){
-    this._connection.query('select * from tb_noticia order by data',callback)
+    this._connection.query('select * from tb_noticia order by id_noticia desc',callback)
 }
 
 module.exports = function(){
