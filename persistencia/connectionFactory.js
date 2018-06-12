@@ -9,9 +9,9 @@ function createDBConnection(){
 		//});
 		return mysql.createConnection({
 			host: 'mysql.assofce.kinghost.net',
-			user: 'assofce',
-			password: 'assofce00',
-			database: 'assofce'
+			user: '',
+			password: '',
+			database: ''
 		});
 }
 
