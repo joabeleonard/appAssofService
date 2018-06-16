@@ -5,8 +5,22 @@ var multer  = require('multer');
 module.exports= function(app){
 
     app.get('/usuarios', function(req, res){
-        console.log('OK');
-        res.send("hehehe");
+        var connection = app.persistencia.connectionFactory();
+        var usuarioDAO = new app.persistencia.UsuarioDao(connection);
+       
+        usuarioDAO.buscarTodas(function(erro, resultado){
+
+           if(erro || resultado.length ===0){
+                console.log(erro);
+                res.status(500).send(erro);
+                return;
+            }else{
+                res.json(resultado);
+                return;
+            }
+            
+        });
+
     });
 
 

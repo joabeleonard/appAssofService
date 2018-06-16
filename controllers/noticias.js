@@ -1,8 +1,6 @@
 module.exports= function(app){
     app.get('/noticias', function(req, res){
        
-        var usuario = req.body;
-
         var connection = app.persistencia.connectionFactory();
         var noticiaDAO = new app.persistencia.NoticiaDao(connection);
        

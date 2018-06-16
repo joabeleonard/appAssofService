@@ -7,6 +7,10 @@ AcompanhamentoJuridicoDAO.prototype.buscaPorCpf = function(cpf,callback){
     'join tb_usuario as u on u.id_usuario = aj.id_usuario where u.cpf = ? order by data desc', cpf,callback)
 }
 
+AcompanhamentoJuridicoDAO.prototype.criar = function(acompanhamento, callback){
+    this._connection.query('insert into tb_acompanhamento_juridico set ?', acompanhamento,callback)
+}
+
 module.exports = function(){
     return AcompanhamentoJuridicoDAO;
 };

@@ -9,9 +9,22 @@ module.exports= function(app){
         var acompanhamentoJuridico = req.body;
 
         var connection = app.persistencia.connectionFactory();
-        var acompanhamentoJuridico = new app.persistencia.AcompanhamentoJuridico(connection);
+        var AcompanhamentoJuridicoDao = new app.persistencia.AcompanhamentoJuridico(connection);
+        AcompanhamentoJuridicoDao.criar(acompanhamentoJuridico, function(erro, resultado){
+
+            if(erro){
+                 console.log(erro);
+                 res.status(500).send(erro);
+                 return;
+             }else{
+                 console.log('acompanhamentoJuridico criado: ' + JSON.stringify(resultado));
+ 
+                 res.status(201).json(resultado);
+                 return;
+             }
+             
+         });
         console.log('OK');
-        res.send("hehe");
     });
 
     app.post('/acompanhamentoJuridico/editar', function(req, res){
