@@ -32,8 +32,22 @@ module.exports= function(app){
         var connection = app.persistencia.connectionFactory();
         var noticiaDAO = new app.persistencia.NoticiaDao(connection);
 
+        console.log(noticia);
+        noticiaDAO.criar(noticia, function(erro, resultado){
+
+            if(erro){
+                 console.log(erro);
+                 res.status(500).send(erro);
+                 return;
+             }else{
+                 console.log('noticia criada: ' + JSON.stringify(resultado));
+ 
+                 res.status(201).json(resultado);
+                 return;
+             }
+             
+         });
         console.log('OK');
-        res.send("hehe");
     });
 
     app.post('/noticias/editar', function(req, res){
