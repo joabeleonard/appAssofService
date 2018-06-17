@@ -11,6 +11,10 @@ AcompanhamentoJuridicoDAO.prototype.criar = function(acompanhamento, callback){
     this._connection.query('insert into tb_acompanhamento_juridico set ?', acompanhamento,callback)
 }
 
+AcompanhamentoJuridicoDAO.prototype.buscarTodas = function(callback){
+    this._connection.query('select * from tb_acompanhamento_juridico ',callback)
+}
+
 module.exports = function(){
     return AcompanhamentoJuridicoDAO;
 };

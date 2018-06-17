@@ -1,7 +1,24 @@
 module.exports= function(app){
     app.get('/acompanhamentoJuridico', function(req, res){
-        console.log('OK');
-        res.send("hehe");
+
+        var connection = app.persistencia.connectionFactory();
+        var acompanhamentoJuridicoDao = new app.persistencia.AcompanhamentoJuridicoDao(connection);
+       
+        acompanhamentoJuridicoDao.buscarTodas(function(erro, resultado){
+        
+           if(erro || resultado.length ===0){
+                console.log(erro);
+                res.status(500).send(erro);
+                return;
+            }else{
+                console.log('Acompanehamentos encontradas: ' +  JSON.stringify(resultado));
+
+                res.json(resultado);
+                return;
+            }
+            
+        });
+
     });
 
     app.post('/acompanhamentoJuridico/cadastrar', function(req, res){
