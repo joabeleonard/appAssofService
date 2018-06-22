@@ -82,38 +82,51 @@ module.exports= function(app){
         var connection = app.persistencia.connectionFactory();
         var usuarioDAO = new app.persistencia.UsuarioDao(connection);
 
-        usuarioDAO.criar(usuario, function(erro, resultado){
+        usuarioDAO.buscaPorCpf()
 
+        usuarioDAO.buscaPorCpf(usuario.cpf, function(erro, resultado){
+
+        
             if(erro){
-                 console.log(erro);
-                 res.status(500).send(erro);
-                 return;
+                console.log(erro);
+                res.status(500).send(erro);
+                return;
+            }
+            if(resultado.length ===0){
+                usuarioDAO.criar(usuario, function(erro, resultado){
+                         console.log('usuario criado: ' + JSON.stringify(resultado));
+         
+                         res.status(201).json(resultado);
+                         return;
+                 });
              }else{
-                 console.log('usuario criado: ' + JSON.stringify(resultado));
- 
-                 res.status(201).json(resultado);
-                 return;
+                usuario.id_usuario= resultado[0].id_usuario; 
+                usuarioDAO.editar(usuario, function(erro, resultado){
+                    console.log('usuario editado: ' + JSON.stringify(resultado));
+    
+                    res.status(201).json(resultado);
+                    return;
+            });
              }
              
-         });
-        console.log('OK');
+         });       
     });
 
-    app.post('/usuarios/uploadImage', function(req, res){
+    app.post('/usuarios/uploadImagee/', function(req, res){
 
-        console.log(req);
+        console.log('recebendo imagem');
 
-        var filename = req.header.filename;
+         var filename = req.header.filename;
     
-        req.pipe(fs.createWriteStream('images-news/' + filename+'.jpg'))
+         req.pipe(fs.createWriteStream('images-news/' + filename+'.jpg'))
         .on('finish', function(){
           console.log('arquivo escrito');
-          res.status(201).send(req);
+          res.status(201).send('ok');
         });
         
     });
 
-    app.route('/usuarios/uploadImage/busboy')
+    app.route('/usuarios/uploadImage')
         .post(function (req, res, next) {
  
         var fstream;
@@ -125,8 +138,7 @@ module.exports= function(app){
             fstream = fs.createWriteStream( 'images-news/' + filename);
             file.pipe(fstream);
             fstream.on('close', function () {    
-                console.log("Upload Finished of " + filename);              
-                res.redirect('back');           //where to go next
+                res.status(201).send('ok');          //where to go next
             });
         });
     });
