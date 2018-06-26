@@ -25,9 +25,11 @@ module.exports= function(app){
 
         var acompanhamentoJuridico = req.body;
 
+        
         var connection = app.persistencia.connectionFactory();
-        var AcompanhamentoJuridicoDao = new app.persistencia.AcompanhamentoJuridico(connection);
-        AcompanhamentoJuridicoDao.criar(acompanhamentoJuridico, function(erro, resultado){
+        var acompanhamentoJuridicoDao = new app.persistencia.AcompanhamentoJuridicoDao(connection);
+       
+        acompanhamentoJuridicoDao.criar(acompanhamentoJuridico, function(erro, resultado){
 
             if(erro){
                  console.log(erro);
